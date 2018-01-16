@@ -3,4 +3,8 @@ services:
   haimdall:
     build: .
     ports:
-      - "8080:80"
+      - "8080:8080"
+    volumes:
+      - ./app/pem:/go/src/app/pem
+    env_file: 
+      - .env 
