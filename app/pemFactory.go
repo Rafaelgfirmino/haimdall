@@ -31,7 +31,7 @@ func schedulerForKeysCreation() {
 	timeScheduler := os.Getenv("SCHEDULER_FOR_KEYS_PEM_CREATE")
 	if len(timeScheduler) > 0 {
 		ctab := crontab.New() // create cron table
-		ctab.MustAddJob(timeScheduler, func() { fmt.Println("15") })
+		ctab.MustAddJob(timeScheduler, OpenFactory)
 	}
 }
 
