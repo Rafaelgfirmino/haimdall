@@ -6,7 +6,10 @@ import (
 	"os"
 )
 
+var i = 0
+
 func main() {
+
 	OpenFactory()
 	heimdallPort := fmt.Sprintf(":%s", os.Getenv("HEIMDALL_PORT"))
 
@@ -15,5 +18,10 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	i += 1
+
+	w.Header().Set("Content-Type", "application/json")
+
+	w.Write([]byte(fmt.Sprintf("%d", i)))
+
 }

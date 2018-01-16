@@ -1,3 +1,5 @@
 app/pem/*
 !app/pem/.gitkeep
+app/servicesMap/*
+!app/servicesMap/.gitkeep
 .env
