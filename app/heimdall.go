@@ -3,13 +3,15 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func main() {
-	fmt.Println("Olá Mundo")
 	OpenFactory()
+	heimdallPort := fmt.Sprintf(":%s", os.Getenv("HEIMDALL_PORT"))
+
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(heimdallPort, nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
