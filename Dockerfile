@@ -2,7 +2,9 @@ FROM golang:1.9.2-stretch
 
 WORKDIR /go/src/app
 
-RUN mkdir -p /go/src/app/pem
+RUN mkdir -p /go/src/app/pem; \
+	mkdir -p /go/src/app/log
+
 
 ADD ./app /go/src/app
 
