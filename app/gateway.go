@@ -33,13 +33,13 @@ func readAllFilesServices() {
 	for _, f := range files {
 		if f.Mode().IsRegular() {
 			if filepath.Ext(f.Name()) == ".json" {
-				readFileService(f.Name())
+				gateway.readFileService(f.Name())
 			}
 		}
 	}
 }
 
-func readFileService(fileName string) {
+func (gateway *Gateway) readFileService(fileName string) {
 	fileDir := fmt.Sprintf("%s/%s", PathServiceMap, fileName)
 
 	file, e := ioutil.ReadFile(fileDir)
@@ -52,8 +52,8 @@ func readFileService(fileName string) {
 	gateway.addServicesInGateway(&tempService)
 }
 
-func (gateway *Gateway)addServicesInGateway(services *[]Service){
-	for _, service := range *services{
+func (gateway *Gateway) addServicesInGateway(services *[]Service) {
+	for _, service := range *services {
 		gateway.Services = append(gateway.Services, service)
 	}
 }
