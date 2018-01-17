@@ -11,11 +11,13 @@ import (
 
 const PathServiceMap string = "./servicesMap"
 
+var gateway Gateway
+
 type Gateway struct {
 	Services []Service
 }
 type Service struct {
-	Name string `json`
+	Path string `json`
 }
 
 func init() {
@@ -47,4 +49,11 @@ func readFileService(fileName string) {
 	}
 	var tempService []Service
 	json.Unmarshal(file, &tempService)
+	gateway.addServicesInGateway(&tempService)
+}
+
+func (gateway *Gateway)addServicesInGateway(services *[]Service){
+	for _, service := range *services{
+		gateway.Services = append(gateway.Services, service)
+	}
 }
