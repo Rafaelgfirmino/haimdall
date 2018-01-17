@@ -18,7 +18,7 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	i += 1
+	i++
 
 	w.Header().Set("Content-Type", "application/json")
 
