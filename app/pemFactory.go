@@ -15,7 +15,7 @@ import (
 const BitSize int = 2048
 const PathPem string = "./pem/"
 
-func OpenFactory() {
+func OpenPemFactory() {
 
 	reader := rand.Reader
 	key, err := rsa.GenerateKey(reader, BitSize)
@@ -31,7 +31,7 @@ func schedulerForKeysCreation() {
 	timeScheduler := os.Getenv("SCHEDULER_FOR_KEYS_PEM_CREATE")
 	if len(timeScheduler) > 0 {
 		ctab := crontab.New() // create cron table
-		ctab.MustAddJob(timeScheduler, OpenFactory)
+		ctab.MustAddJob(timeScheduler, OpenPemFactory)
 	}
 }
 

@@ -10,18 +10,16 @@ var i = 0
 
 func main() {
 
-	OpenFactory()
+	OpenPemFactory()
 	heimdallPort := fmt.Sprintf(":%s", os.Getenv("HEIMDALL_PORT"))
 
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/teste", handler)
 	http.ListenAndServe(heimdallPort, nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	i++
-
 	w.Header().Set("Content-Type", "application/json")
-
+	i++
 	w.Write([]byte(fmt.Sprintf("%d", i)))
 
 }
