@@ -1,7 +1,7 @@
 app/pem/*
 !app/pem/.gitkeep
 app/servicesMap/*
-!app/servicesMap/.gitkeep
+!app/servicesMap/google.json.dist
 logs/*
 !logs/.gitkeep
 .env

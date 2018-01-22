@@ -17,7 +17,15 @@ type Gateway struct {
 	Services []Service
 }
 type Service struct {
-	Path string `json`
+	Name     string    `json:name`
+	Url      string    `json:url`
+	Handlers []Handler `json:handler`
+}
+type Handler struct {
+	Listem        string `json:listem`
+	ContentType   string `json:listem`
+	Authorization bool   `json:authorization`
+	ServicePath   string `json:servicePath`
 }
 
 func init() {
@@ -47,9 +55,10 @@ func (gateway *Gateway) readFileService(fileName string) {
 		fmt.Printf("File error: %v\n", e)
 		os.Exit(1)
 	}
-	var tempService []Service
+	var tempService Gateway
 	json.Unmarshal(file, &tempService)
-	gateway.addServicesInGateway(&tempService)
+	fmt.Println(tempService)
+	// gateway.addServicesInGateway(&tempService)
 }
 
 func (gateway *Gateway) addServicesInGateway(services *[]Service) {
