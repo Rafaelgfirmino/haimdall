@@ -5,3 +5,4 @@ app/servicesMap/*
 logs/*
 !logs/.gitkeep
 .env
+app/tmp
