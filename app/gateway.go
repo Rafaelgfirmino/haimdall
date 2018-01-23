@@ -65,11 +65,9 @@ func (gateway *Gateway) addServicesInGateway(services *[]Service) {
 	for _, service := range *services {
 		for keyHandler, handler := range service.Handlers {
 			if handler.ServiceFullURL == "" {
-				fmt.Println(handler.ServicePath)
 				service.Handlers[keyHandler].ServiceFullURL = fmt.Sprintf("%s%s", service.Url, handler.ServicePath)
 			}
 		}
 		gateway.Services = append(gateway.Services, service)
 	}
-	fmt.Println(gateway)
 }
