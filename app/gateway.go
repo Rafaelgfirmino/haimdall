@@ -52,13 +52,12 @@ func (gateway *Gateway) readFileService(fileName string) {
 
 	file, e := ioutil.ReadFile(fileDir)
 	if e != nil {
-		fmt.Printf("File error: %v\n", e)
+		fmt.Printf("File  error: %v\n", e)
 		os.Exit(1)
 	}
 	var tempService Gateway
 	json.Unmarshal(file, &tempService)
-	fmt.Println(tempService)
-	// gateway.addServicesInGateway(&tempService)
+	gateway.addServicesInGateway(&tempService.Services)
 }
 
 func (gateway *Gateway) addServicesInGateway(services *[]Service) {
