@@ -22,10 +22,11 @@ type Service struct {
 	Handlers []Handler `json:handler`
 }
 type Handler struct {
-	Listem        string `json:listem`
-	ContentType   string `json:listem`
-	Authorization bool   `json:authorization`
-	ServicePath   string `json:servicePath`
+	Listen         string `json:listen`
+	ContentType    string `json:listem`
+	Authorization  bool   `json:authorization`
+	ServicePath    string `json:servicePath`
+	ServiceFullURL string
 }
 
 func init() {
@@ -62,6 +63,13 @@ func (gateway *Gateway) readFileService(fileName string) {
 
 func (gateway *Gateway) addServicesInGateway(services *[]Service) {
 	for _, service := range *services {
+		for keyHandler, handler := range service.Handlers {
+			if handler.ServiceFullURL == "" {
+				fmt.Println(handler.ServicePath)
+				service.Handlers[keyHandler].ServiceFullURL = fmt.Sprintf("%s%s", service.Url, handler.ServicePath)
+			}
+		}
 		gateway.Services = append(gateway.Services, service)
 	}
+	fmt.Println(gateway)
 }
