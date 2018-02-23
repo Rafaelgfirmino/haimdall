@@ -13,6 +13,7 @@ const PathServiceMap string = "./servicesMap"
 
 var gateway Gateway
 
+
 type Gateway struct {
 	Services []Service
 }
@@ -29,11 +30,12 @@ type Handler struct {
 	ServiceFullURL string
 }
 
-func init() {
+func Start() {
 	readAllFilesServices()
 }
 
 func readAllFilesServices() {
+	gatewaytemp := Gateway{}
 	files, err := ioutil.ReadDir(PathServiceMap)
 	if err != nil {
 		log.Fatal(err)
@@ -42,10 +44,11 @@ func readAllFilesServices() {
 	for _, f := range files {
 		if f.Mode().IsRegular() {
 			if filepath.Ext(f.Name()) == ".json" {
-				gateway.readFileService(f.Name())
+				gatewaytemp.readFileService(f.Name())
 			}
 		}
 	}
+	gateway = gatewaytemp;
 }
 
 func (gateway *Gateway) readFileService(fileName string) {

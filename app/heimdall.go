@@ -5,13 +5,42 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"log"
 	"strings"
+	"github.com/go-fsnotify/fsnotify"
 )
 
 var i = 0
 
 func main() {
+	Start()
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer watcher.Close()
 
+	done := make(chan bool)
+
+	//
+	go func() {
+		for {
+			select {
+			// watch for events
+			case event := <-watcher.Events:
+				fmt.Printf("EVENT! %#v\n", event)
+				Start()
+				// watch for errors
+			case err := <-watcher.Errors:
+				fmt.Println("ERROR", err)
+			}
+		}
+	}()
+
+	// out of the box fsnotify can watch a single file, or a single directory
+	if err := watcher.Add(PathServiceMap); err != nil {
+		fmt.Println("ERROR", err)
+	}
 	OpenPemFactory()
 	heimdallPort := fmt.Sprintf(":%s", os.Getenv("HEIMDALL_PORT"))
 
@@ -20,6 +49,8 @@ func main() {
 	})
 
 	http.ListenAndServe(heimdallPort, nil)
+	<-done
+
 }
 
 func HttpHandler(w http.ResponseWriter, r *http.Request) {
